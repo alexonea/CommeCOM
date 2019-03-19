@@ -13,7 +13,7 @@ namespace HIT
 
 extern "C"
 {
-  int getInterface(HIT::IDrawable **ppInterface)
+  int getInterface(HIT::IUnknown **ppInterface)
   {
     try
     {
@@ -22,6 +22,7 @@ extern "C"
     }
     catch(...)
     {
+      *ppInterface = nullptr;
       return -1;
     }
   }

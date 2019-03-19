@@ -2,6 +2,7 @@
 #include <dlfcn.h>
 
 #include <interface/IDrawable.hpp>
+#include <interface/IUnknown.hpp>
 
 int
 main(int argc, char const *argv[])
@@ -13,7 +14,7 @@ main(int argc, char const *argv[])
   }
 
   std::cout << "Loading " << argv[1] << " ..." << std::endl;
-  
+
   const auto hdl = dlopen(argv[1], RTLD_LAZY);
   if (hdl == nullptr)
   {
@@ -31,18 +32,36 @@ main(int argc, char const *argv[])
     return 1;
   }
 
-  HIT::IDrawable *pDrawable;
-  const int iRes = pGetInterface(&pDrawable);
-
-  if (iRes != 0 || ! pDrawable)
+  HIT::IUnknown *pUnknown;
   {
-    std::cerr << "[main] could not acquire interface" << std::endl;
-    dlclose(hdl);
-    return 1;
+    const int iRes = pGetInterface(&pUnknown);
+
+    if (iRes != 0 || ! pUnknown)
+    {
+      std::cerr << "[main] could not acquire interface" << std::endl;
+      dlclose(hdl);
+      return 1;
+    }
+  }
+
+  HIT::IDrawable *pDrawable;
+  {
+    const int iRes = pUnknown->queryInterface(IID_IDrawable,
+      (void **) &pDrawable);
+
+    if (iRes != 0 || ! pDrawable)
+    {
+      std::cerr << "[main] could not acquire interface" << std::endl;
+      pUnknown->release();
+      dlclose(hdl);
+      return 1;
+    }
   }
 
   pDrawable->draw();
 
+  pDrawable->release();
+  pUnknown->release();
   dlclose(hdl);
   return 0;
 }
