@@ -5,4 +5,5 @@ project(experiment)
 include_directories(${PROJECT_SOURCE_DIR})
 add_subdirectory(core)
 add_subdirectory(impl)
+add_subdirectory(interface)
 

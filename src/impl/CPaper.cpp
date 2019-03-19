@@ -1,5 +1,9 @@
 #include "impl/CPaper.hpp"
 
+#include <com/CComObject.hpp>
+
+#include <algorithm>
+
 namespace HIT
 {
   void
@@ -21,6 +25,20 @@ extern "C"
     catch(...)
     {
       *ppInterface = nullptr;
+      return -1;
+    }
+  }
+
+  int getInterfaceObject(HIT::CComObject<HIT::IUnknown>& object)
+  {
+    try
+    {
+      HIT::CComObject<HIT::IUnknown> tmp(new HIT::CPaper());
+      std::cout << "before swap\n";
+      object.swap(std::move(tmp));
+    }
+    catch(...)
+    {
       return -1;
     }
   }

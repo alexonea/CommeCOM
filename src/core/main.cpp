@@ -4,6 +4,8 @@
 #include <interface/IDrawable.hpp>
 #include <interface/IUnknown.hpp>
 
+#include <com/CComObject.hpp>
+
 int
 main(int argc, char const *argv[])
 {
@@ -22,6 +24,7 @@ main(int argc, char const *argv[])
     return 1;
   }
 
+#if 0
   const HIT::DLEntryPointFunc pGetInterface = 
     reinterpret_cast<const HIT::DLEntryPointFunc> (dlsym(hdl, "getInterface"));
   
@@ -58,10 +61,48 @@ main(int argc, char const *argv[])
     }
   }
 
+
   pDrawable->draw();
 
   pDrawable->release();
   pUnknown->release();
+#endif
+
+#if 1
+  const auto pGetInterface = 
+    reinterpret_cast<const HIT::DLEntryPointObjectFunc> (
+      dlsym(hdl, "getInterfaceObject")
+    );
+  
+  if (! pGetInterface)
+  {
+    std::cerr << "[main]" << dlerror() << std::endl;
+    dlclose(hdl);
+    return 1;
+  }
+
+  {
+    HIT::CComObject<HIT::IUnknown> object;
+    {
+      const int iRes = pGetInterface(object);
+
+      if (iRes != 0)
+      {
+        std::cerr << "[main] could not acquire interface" << std::endl;
+        dlclose(hdl);
+        return 1;
+      }
+    }
+
+    HIT::CComObject<HIT::IDrawable> pDrawable{object};
+    pDrawable->draw();
+
+    HIT::CComObject<HIT::IUnknown> pOther{pDrawable};
+  }
+#endif
+
+  // pDrawable->release();
+  // pUnknown->release();
   dlclose(hdl);
   return 0;
 }

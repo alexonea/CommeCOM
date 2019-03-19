@@ -51,11 +51,14 @@ namespace HIT
     virtual int addRef() override
     {
       m_nRefCount++;
+      std::cout << "addRef => " << m_nRefCount << "\n";
     }
 
     virtual int release() override
     {
       m_nRefCount--;
+
+      std::cout << "release => " << m_nRefCount << "\n";
 
       if (m_nRefCount == 0)
         delete this;

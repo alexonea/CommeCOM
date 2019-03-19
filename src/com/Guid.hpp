@@ -13,6 +13,15 @@ namespace HIT
     uint8_t  data4[8];
   };
 
+  template <typename I>
+  struct IIDTraits
+  {
+    static inline constexpr GUID IID()
+    {
+      return { 0 };
+    }
+  };
+
   using RefIID = const GUID&;
 
   inline

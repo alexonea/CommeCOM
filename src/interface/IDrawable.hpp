@@ -2,6 +2,7 @@
 #define EXPERIMENT_IDRAWABLE_HPP 1
 
 #include "interface/IUnknown.hpp"
+#include <com/CComObject.hpp>
 
 namespace HIT
 {
@@ -11,6 +12,17 @@ namespace HIT
   };
 
   using DLEntryPointFunc = int (*) (IUnknown **ppInterface);
+  using DLEntryPointObjectFunc = int (*) (CComObject<IUnknown>& object);
+
+  template <>
+  struct IIDTraits<IDrawable>
+  {
+    static inline constexpr HIT::GUID IID()
+    {
+      return { 0xAB00CD00, 0x1234, 0x4568,
+        { 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46 } };
+    }
+  };
 }
 
 extern "C"

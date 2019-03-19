@@ -11,6 +11,16 @@ namespace HIT
     virtual int addRef() = 0;
     virtual int release() = 0;
   };
+
+  template <>
+  struct IIDTraits<HIT::IUnknown>
+  {
+    static inline constexpr HIT::GUID IID()
+    {
+      return { 0x00000000, 0x0000, 0x0000,
+        { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46 } };
+    }
+  };
 }
 
 extern "C"
