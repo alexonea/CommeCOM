@@ -1,0 +1,28 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+body ul.navigation,
+body ul.navigation li
+{
+  background: none;
+  border: initial;
+  border-radius: initial;
+  display: block;
+  width: auto;
+  float: unset;
+  height: unset;
+  margin: unset;
+}
+
+body ul.navigation.sub-navigation
+{
+  margin-left: 15px;
+}
+
+body ul.navigation li a
+{
+  text-align: unset;
+  height: unset;
+}
