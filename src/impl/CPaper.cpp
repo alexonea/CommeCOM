@@ -1,7 +1,5 @@
 #include "impl/CPaper.hpp"
 
-#include <iostream>
-
 namespace HIT
 {
   void

@@ -1,6 +1,8 @@
 #if !defined(EXPERIMENT_CPAPER_HPP)
 #define EXPERIMENT_CPAPER_HPP 1
 
+#include <iostream>
+
 #include "com/Guid.hpp"
 #include "interface/IUnknown.hpp"
 #include "interface/IDrawable.hpp"
@@ -13,6 +15,12 @@ namespace HIT
     CPaper()
     {
       m_nRefCount = 1;
+      std::cout << "CPaper::CPaper()" << std::endl;
+    }
+
+    ~CPaper()
+    {
+      std::cout << "CPaper::~CPaper()" << std::endl;
     }
 
   public:
