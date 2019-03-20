@@ -35,12 +35,12 @@ namespace HIT
         addRef();
         return 0;
       }
-      // else if (iid == IID_IDrawable)
-      // {
-      //   *ppvInterface = static_cast<IDrawable *> (this);
-      //   addRef();
-      //   return 0;
-      // }
+      else if (iid == IID_IDrawable)
+      {
+        *ppvInterface = static_cast<IDrawable *> (this);
+        addRef();
+        return 0;
+      }
       else
       {
         *ppvInterface = nullptr;
