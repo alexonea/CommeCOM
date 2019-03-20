@@ -23,13 +23,13 @@ namespace HIT
     {
       if (HIT::isIUnknown(iid))
       {
-        *ppvInterface = reinterpret_cast<IUnknown *> (this);
+        *ppvInterface = static_cast<IUnknown *> (this);
         addRef();
         return 0;
       }
       else if (iid == IID_IDrawable)
       {
-        *ppvInterface = reinterpret_cast<IDrawable *> (this);
+        *ppvInterface = static_cast<IDrawable *> (this);
         addRef();
         return 0;
       }
