@@ -95,9 +95,14 @@ main(int argc, char const *argv[])
     }
 
     HIT::CComObject<HIT::IDrawable> pDrawable{object};
-    pDrawable->draw();
 
-    HIT::CComObject<HIT::IUnknown> pOther{pDrawable};
+    if (pDrawable)
+      pDrawable->draw();
+    else
+      std::cerr << "[main] could not acquire IDrawable, going on...\n";
+
+    if (pDrawable)
+      HIT::CComObject<HIT::IUnknown> pOther{pDrawable};
   }
 #endif
 

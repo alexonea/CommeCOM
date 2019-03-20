@@ -24,6 +24,7 @@ namespace HIT
       other.queryInterface(IIDTraits<IDesired>::IID(),
         static_cast<void **> (
           static_cast<void *> (&m_pObject)));
+      std::cout << "result: " << m_pObject << "\n";
     }
 
     template <typename IOther>
