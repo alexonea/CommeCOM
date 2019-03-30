@@ -1,14 +1,11 @@
-#include <iostream>
-#include <dlfcn.h>
-
 #define HIT_INSTANTIATE_IID 1
 
-#include <interface/IDrawable.hpp>
+#include <iostream>
 
-#include <com/IUnknown.hpp>
 #include <com/CInterfacePtr.hpp>
 #include <com/Dynamic.hpp>
-#include <com/Cast.hpp>
+
+#include <interface/IDrawable.hpp>
 
 #include <boost/dll.hpp>
 

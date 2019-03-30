@@ -19,6 +19,7 @@ namespace HIT
 }
 
 #include <com/Guid.hpp>
+#include <com/IUnknown.hpp>
 
 #endif // EXPERIMENTAL_COM_TYPES_HPP
 

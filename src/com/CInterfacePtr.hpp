@@ -1,9 +1,9 @@
 #if !defined(EXPERIMENTAL_CInterfacePtr_HPP)
 #define EXPERIMENTAL_CInterfacePtr_HPP 1
 
-#include <com/IUnknown.hpp>
+#include <com/Types.hpp>
 
-#include <algorithm>
+#include <algorithm> // needed for swap
 
 namespace HIT
 {
@@ -347,6 +347,8 @@ namespace HIT
     }
   };
 }
+
+#include <com/Cast.hpp>
 
 #endif // EXPERIMENTAL_CInterfacePtr_HPP
 

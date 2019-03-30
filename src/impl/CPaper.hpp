@@ -5,9 +5,8 @@
 
 #include <iostream>
 
-#include "com/Guid.hpp"
-#include "com/IUnknown.hpp"
-#include "interface/IDrawable.hpp"
+#include <com/Types.hpp>
+#include <interface/IDrawable.hpp>
 
 namespace HIT
 {
@@ -15,8 +14,8 @@ namespace HIT
   {
   public:
     CPaper()
+    : m_nRefCount {1}
     {
-      m_nRefCount = 1;
       std::cout << "CPaper::CPaper()" << std::endl;
     }
 
@@ -33,7 +32,7 @@ namespace HIT
     {
       if (HIT::isIUnknown(iid))
       {
-        *ppvInterface = static_cast<IUnknown *> (this);
+        *ppvInterface = static_cast<IDrawable *> (this);
         addRef();
         return S_OK;
       }
@@ -70,7 +69,7 @@ namespace HIT
     }
 
   private:
-    int m_nRefCount;
+    uint32_t m_nRefCount;
   };
 }
 
