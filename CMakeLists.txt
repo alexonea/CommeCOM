@@ -7,5 +7,5 @@ find_package(Boost REQUIRED COMPONENTS filesystem)
 include_directories(include)
 
 add_subdirectory(include)
-add_subdirectory(demo)
+add_subdirectory(examples)
 
