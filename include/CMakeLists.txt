@@ -14,5 +14,5 @@ target_include_directories(CCom INTERFACE
   $<INSTALL_INTERFACE:include/CCom>
 )
 
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/CCom DESTINATION include/CCom)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/CCom DESTINATION include)
 
