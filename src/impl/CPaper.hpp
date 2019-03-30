@@ -1,10 +1,12 @@
 #if !defined(EXPERIMENT_CPAPER_HPP)
 #define EXPERIMENT_CPAPER_HPP 1
 
+#define HIT_INSTANTIATE_IID 1
+
 #include <iostream>
 
 #include "com/Guid.hpp"
-#include "interface/IUnknown.hpp"
+#include "com/IUnknown.hpp"
 #include "interface/IDrawable.hpp"
 
 namespace HIT
@@ -24,44 +26,47 @@ namespace HIT
     }
 
   public:
-    virtual void draw() override;
+    virtual void draw() noexcept override;
 
   public:
-    virtual int queryInterface(const RefIID iid, void **ppvInterface) override
+    virtual RESULT queryInterface(const RefIID iid, void **ppvInterface) noexcept override
     {
       if (HIT::isIUnknown(iid))
       {
         *ppvInterface = static_cast<IUnknown *> (this);
         addRef();
-        return 0;
+        return S_OK;
       }
       else if (iid == IID_IDrawable)
       {
         *ppvInterface = static_cast<IDrawable *> (this);
         addRef();
-        return 0;
+        return S_OK;
       }
       else
       {
         *ppvInterface = nullptr;
-        return 1;
+        return E_NOINTERFACE;
       }
     }
 
-    virtual int addRef() override
+    virtual uint32_t addRef() noexcept override
     {
-      m_nRefCount++;
+      const uint32_t y = ++m_nRefCount;
       std::cout << "addRef => " << m_nRefCount << "\n";
+      return y;
     }
 
-    virtual int release() override
+    virtual uint32_t release() noexcept override
     {
-      m_nRefCount--;
+      const uint32_t y = --m_nRefCount;
 
       std::cout << "release => " << m_nRefCount << "\n";
 
-      if (m_nRefCount == 0)
+      if (y == 0)
         delete this;
+
+      return y;
     }
 
   private:

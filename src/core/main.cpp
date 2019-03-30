@@ -1,10 +1,16 @@
 #include <iostream>
 #include <dlfcn.h>
 
-#include <interface/IDrawable.hpp>
-#include <interface/IUnknown.hpp>
+#define HIT_INSTANTIATE_IID 1
 
-#include <com/CComObject.hpp>
+#include <interface/IDrawable.hpp>
+
+#include <com/IUnknown.hpp>
+#include <com/CInterfacePtr.hpp>
+#include <com/Dynamic.hpp>
+#include <com/Cast.hpp>
+
+#include <boost/dll.hpp>
 
 int
 main(int argc, char const *argv[])
@@ -17,98 +23,40 @@ main(int argc, char const *argv[])
 
   std::cout << "Loading " << argv[1] << " ..." << std::endl;
 
-  const auto hdl = dlopen(argv[1], RTLD_LAZY);
-  if (hdl == nullptr)
-  {
-    std::cerr << "[main]" << dlerror() << std::endl;
-    return 1;
-  }
+  namespace dll = boost::dll;
 
-#if 0
-  const HIT::DLEntryPointFunc pGetInterface = 
-    reinterpret_cast<const HIT::DLEntryPointFunc> (dlsym(hdl, "getInterface"));
+  dll::shared_library impl (argv[1]);
+  auto pfnGetInterface = impl.get <HIT::DLEntryPointPPVFunc> ("getInstance");
   
-  if (! pGetInterface)
+  if (! pfnGetInterface)
   {
-    std::cerr << "[main]" << dlerror() << std::endl;
-    dlclose(hdl);
+    std::cerr << "[main] could not get entry point symbol" << std::endl;
     return 1;
   }
 
-  HIT::IUnknown *pUnknown;
+  try
   {
-    const int iRes = pGetInterface(&pUnknown);
-
-    if (iRes != 0 || ! pUnknown)
-    {
-      std::cerr << "[main] could not acquire interface" << std::endl;
-      dlclose(hdl);
-      return 1;
-    }
-  }
-
-  HIT::IDrawable *pDrawable;
-  {
-    const int iRes = pUnknown->queryInterface(IID_IDrawable,
-      (void **) &pDrawable);
-
-    if (iRes != 0 || ! pDrawable)
-    {
-      std::cerr << "[main] could not acquire interface" << std::endl;
-      pUnknown->release();
-      dlclose(hdl);
-      return 1;
-    }
-  }
-
-
-  pDrawable->draw();
-
-  pDrawable->release();
-  pUnknown->release();
-#endif
-
-#if 1
-  const auto pGetInterface = 
-    reinterpret_cast<const HIT::DLEntryPointObjectFunc> (
-      dlsym(hdl, "getInterfaceObject")
-    );
-  
-  if (! pGetInterface)
-  {
-    std::cerr << "[main]" << dlerror() << std::endl;
-    dlclose(hdl);
-    return 1;
-  }
-
-  {
-    HIT::CComObject<HIT::IUnknown> object;
-    {
-      const int iRes = pGetInterface(object);
-
-      if (iRes != 0)
-      {
-        std::cerr << "[main] could not acquire interface" << std::endl;
-        dlclose(hdl);
-        return 1;
-      }
-    }
-
-    HIT::CComObject<HIT::IDrawable> pDrawable{object};
+    HIT::CInterfacePtr <HIT::IDrawable> pDrawable;
+    HIT::getInterfacePtr (pfnGetInterface, pDrawable);
 
     if (pDrawable)
       pDrawable->draw();
     else
       std::cerr << "[main] could not acquire IDrawable, going on...\n";
-
-    if (pDrawable)
-      HIT::CComObject<HIT::IUnknown> pOther{pDrawable};
+    
+    auto pUnknown = HIT::interface_cast <HIT::IUnknown> (pDrawable);
+    if (pUnknown)
+    {
+      auto pTest = HIT::interface_cast <HIT::IDrawable> (pUnknown);
+      if (pTest)
+        pTest->draw();
+    }
   }
-#endif
+  catch (...)
+  {
+    std::cerr << "catstrophe" << std::endl;
+  }
 
-  // pDrawable->release();
-  // pUnknown->release();
-  dlclose(hdl);
   return 0;
 }
 

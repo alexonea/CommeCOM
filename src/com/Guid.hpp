@@ -13,25 +13,20 @@ namespace HIT
     uint8_t  data4[8];
   };
 
-  template <typename I>
-  struct IIDTraits
-  {
-    static inline constexpr GUID IID()
-    {
-      return { 0 };
-    }
-  };
-
-  using RefIID = const GUID&;
+  using IID   = GUID;
+  using CLSID = GUID;
+  
+  using RefIID = const GUID &;
 
   inline
   bool
-  operator==(const GUID& lhs, const GUID& rhs)
+  operator==
+  (const GUID &lhs, const GUID &rhs)
   {
-    const uint8_t *pLhsData = reinterpret_cast<const uint8_t *> (&lhs);
-    const uint8_t *pRhsData = reinterpret_cast<const uint8_t *> (&rhs);
+    const uint8_t *pLhsData = reinterpret_cast <const uint8_t *> (&lhs);
+    const uint8_t *pRhsData = reinterpret_cast <const uint8_t *> (&rhs);
 
-    for (int i = 0; i < sizeof(lhs); ++i)
+    for (int i = 0; i < sizeof (lhs); ++i)
       if (pLhsData[i] != pRhsData[i])
         return false;
     
@@ -40,19 +35,21 @@ namespace HIT
 
   inline
   bool
-  operator!=(const GUID& lhs, const GUID& rhs)
+  operator!=
+  (const GUID &lhs, const GUID &rhs)
   {
     return ! (lhs == rhs);
   }
 
   inline
   bool
-  isIUnknown(const GUID& iid)
+  isIUnknown
+  (const GUID& iid)
   {
     return (iid.data1    == 0x00000000 &&
             iid.data2    == 0x0000 &&
             iid.data3    == 0x0000 &&
-            iid.data4[0] == 0x00 &&
+            iid.data4[0] == 0xc0 &&
             iid.data4[1] == 0x00 &&
             iid.data4[2] == 0x00 &&
             iid.data4[3] == 0x00 &&
@@ -61,6 +58,42 @@ namespace HIT
             iid.data4[6] == 0x00 &&
             iid.data4[7] == 0x46);
   }
+
+  template <class I>
+  struct IID_Traits
+  {};
+
+  #if defined (HIT_INSTANTIATE_IID)
+    #define HIT_DEFINE_IID(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
+      extern "C" \
+      const HIT::GUID IID_##I = {a, b, c, {d1, d2, d3, d4, d5, d6, d7, d8}}; \
+      \
+      template <> \
+      struct IID_Traits <I> \
+      { \
+        static \
+        const \
+        HIT::GUID \
+        iid; \
+      }; \
+      \
+      const \
+      HIT::GUID \
+      HIT::IID_Traits <I>::iid = {a, b, c, { d1, d2, d3, d4, d5, d6, d7, d8 }};
+  #else
+   #define HIT_DEFINE_IID(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
+      extern "C" \
+      const HIT::GUID IID_##I; \
+      \
+      template <> \
+      struct IID_Traits <I> \
+      { \
+        static \
+        const \
+        HIT::GUID \
+        iid; \
+      };
+  #endif
 }
 
 #endif // EXPERIMENTAL_GUID_HPP
