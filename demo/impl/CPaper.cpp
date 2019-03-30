@@ -1,8 +1,8 @@
 #include "impl/CPaper.hpp"
 
-#include <com/Dynamic.hpp>
+#include <CCom/Dynamic.hpp>
 
-namespace HIT
+namespace CCom
 {
   void
   CPaper::draw()
@@ -11,6 +11,6 @@ namespace HIT
     std::cout << "CPaper::draw()" << std::endl;
   }
 
-  HIT_DL_ENTRY_POINT(getInstance, CPaper);
+  CCOM_DL_ENTRY_POINT(getInstance, CPaper);
 }
 

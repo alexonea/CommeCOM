@@ -1,9 +1,9 @@
-#define HIT_INSTANTIATE_IID 1
+#define CCOM_INSTANTIATE_IID 1
 
 #include <iostream>
 
-#include <com/CInterfacePtr.hpp>
-#include <com/Dynamic.hpp>
+#include <CCom/CInterfacePtr.hpp>
+#include <CCom/Dynamic.hpp>
 
 #include <interface/IDrawable.hpp>
 
@@ -23,7 +23,7 @@ main(int argc, char const *argv[])
   namespace dll = boost::dll;
 
   dll::shared_library impl (argv[1]);
-  auto pfnGetInterface = impl.get <HIT::DLEntryPointPPVFunc> ("getInstance");
+  auto pfnGetInterface = impl.get <CCom::DLEntryPointPPVFunc> ("getInstance");
   
   if (! pfnGetInterface)
   {
@@ -33,18 +33,18 @@ main(int argc, char const *argv[])
 
   try
   {
-    HIT::CInterfacePtr <HIT::IDrawable> pDrawable;
-    HIT::getInterfacePtr (pfnGetInterface, pDrawable);
+    CCom::CInterfacePtr <CCom::IDrawable> pDrawable;
+    CCom::getInterfacePtr (pfnGetInterface, pDrawable);
 
     if (pDrawable)
       pDrawable->draw();
     else
       std::cerr << "[main] could not acquire IDrawable, going on...\n";
     
-    auto pUnknown = HIT::interface_cast <HIT::IUnknown> (pDrawable);
+    auto pUnknown = CCom::interface_cast <CCom::IUnknown> (pDrawable);
     if (pUnknown)
     {
-      auto pTest = HIT::interface_cast <HIT::IDrawable> (pUnknown);
+      auto pTest = CCom::interface_cast <CCom::IDrawable> (pUnknown);
       if (pTest)
         pTest->draw();
     }

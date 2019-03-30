@@ -1,14 +1,14 @@
-#if !defined(EXPERIMENT_CPAPER_HPP)
-#define EXPERIMENT_CPAPER_HPP 1
+#if ! defined(CCOM_DEMO_IMPL_CPAPER_HPP)
+#define CCOM_DEMO_IMPL_CPAPER_HPP 1
 
-#define HIT_INSTANTIATE_IID 1
+#define CCOM_INSTANTIATE_IID 1
 
 #include <iostream>
 
-#include <com/Types.hpp>
+#include <CCom/Types.hpp>
 #include <interface/IDrawable.hpp>
 
-namespace HIT
+namespace CCom
 {
   class CPaper : public IDrawable
   {
@@ -30,7 +30,7 @@ namespace HIT
   public:
     virtual RESULT queryInterface(const RefIID iid, void **ppvInterface) noexcept override
     {
-      if (HIT::isIUnknown(iid))
+      if (CCom::isIUnknown(iid))
       {
         *ppvInterface = static_cast<IDrawable *> (this);
         addRef();
@@ -73,5 +73,5 @@ namespace HIT
   };
 }
 
-#endif // EXPERIMENT_CPAPER_HPP
+#endif // CCOM_DEMO_IMPL_CPAPER_HPP
 

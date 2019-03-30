@@ -1,9 +1,9 @@
-#if !defined(EXPERIMENTAL_GUID_HPP)
-#define EXPERIMENTAL_GUID_HPP 1
+#if ! defined(CCOM_GUID_HPP)
+#define CCOM_GUID_HPP 1
 
 #include <cstdint>
 
-namespace HIT
+namespace CCom
 {
   struct GUID
   {
@@ -63,38 +63,39 @@ namespace HIT
   struct IID_Traits
   {};
 
-  #if defined (HIT_INSTANTIATE_IID)
-    #define HIT_DEFINE_IID(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
+  #if defined (CCOM_INSTANTIATE_IID)
+    #define CCOM_DEFINE_IID(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
       extern "C" \
-      const HIT::GUID IID_##I = {a, b, c, {d1, d2, d3, d4, d5, d6, d7, d8}}; \
+      const CCom::GUID IID_##I = {a, b, c, {d1, d2, d3, d4, d5, d6, d7, d8}}; \
       \
       template <> \
       struct IID_Traits <I> \
       { \
         static \
         const \
-        HIT::GUID \
+        CCom::GUID \
         iid; \
       }; \
       \
       const \
-      HIT::GUID \
-      HIT::IID_Traits <I>::iid = {a, b, c, { d1, d2, d3, d4, d5, d6, d7, d8 }};
+      CCom::GUID \
+      CCom::IID_Traits <I>::iid = {a, b, c, { d1, d2, d3, d4, d5, d6, d7, d8 }};
   #else
-   #define HIT_DEFINE_IID(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
+   #define CCOM_DEFINE_IID(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
       extern "C" \
-      const HIT::GUID IID_##I; \
+      const CCom::GUID IID_##I; \
       \
       template <> \
       struct IID_Traits <I> \
       { \
         static \
         const \
-        HIT::GUID \
+        CCom::GUID \
         iid; \
       };
   #endif
-}
 
-#endif // EXPERIMENTAL_GUID_HPP
+} // namespace CCom
+
+#endif // CCOM_GUID_HPP
 

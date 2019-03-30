@@ -1,9 +1,9 @@
-#if !defined(EXPERIMENTAL_IUNKNOWN_HPP)
-#define EXPERIMENTAL_IUNKNOWN_HPP 1
+#if ! defined(CCOM_IUNKNOWN_HPP)
+#define CCOM_IUNKNOWN_HPP 1
 
-#include <com/Types.hpp>
+#include <CCom/Types.hpp>
 
-namespace HIT
+namespace CCom
 {
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   //
@@ -83,8 +83,9 @@ namespace HIT
     }
   };
 
-  HIT_DEFINE_IID (IUnknown, 0x00000000, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
-}
+  CCOM_DEFINE_IID (IUnknown, 0x00000000, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
 
-#endif // EXPERIMENTAL_IUNKNOWN_HPP
+} // namespace CCom
+
+#endif // CCOM_IUNKNOWN_HPP
 

@@ -1,15 +1,15 @@
-#if !defined(EXPERIMENTAL_CAST_HPP)
-#define EXPERIMENTAL_CAST_HPP 1
+#if ! defined(CCOM_CAST_HPP)
+#define CCOM_CAST_HPP 1
 
-#include <com/CInterfacePtr.hpp>
+#include <CCom/CInterfacePtr.hpp>
 
-namespace HIT
+namespace CCom
 {
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   //
   //  interface_cast - cast operation between two CIntefacePtr instances
   //
-  //  Thanks to Catalin Ghita for poiting out the necessity of a free function
+  //  Thanks to Catalin GCComa for poiting out the necessity of a free function
   //    to perform the cast as opposed to the original conversion constructor
   //    within the CInterfacePtr implementation. In short: interface casting
   //    supports both down and up casts. While down casts are always allowed,
@@ -31,7 +31,8 @@ namespace HIT
 
     return tmp;
   }
-}
 
-#endif // EXPERIMENTAL_CAST_HPP
+} // namespace CCom
+
+#endif // CCOM_CAST_HPP
 

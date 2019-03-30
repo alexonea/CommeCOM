@@ -1,9 +1,9 @@
-#if !defined(EXPERIMENTAL_COM_TYPES_HPP)
-#define EXPERIMENTAL_COM_TYPES_HPP 1
+#if ! defined(CCOM_TYPES_HPP)
+#define CCOM_TYPES_HPP 1
 
 #include <cstdint>
 
-namespace HIT
+namespace CCom
 {
   enum RESULT : int32_t
   {
@@ -16,10 +16,11 @@ namespace HIT
 
   inline bool SUCCEEDED (RESULT r) { return r >= 0;          }
   inline bool FAILED    (RESULT r) { return ! SUCCEEDED (r); }
-}
 
-#include <com/Guid.hpp>
-#include <com/IUnknown.hpp>
+} // namespace CCom
 
-#endif // EXPERIMENTAL_COM_TYPES_HPP
+#include <CCom/Guid.hpp>
+#include <CCom/IUnknown.hpp>
+
+#endif // CCOM_TYPES_HPP
 

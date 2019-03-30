@@ -1,11 +1,11 @@
-#if !defined(EXPERIMENTAL_CInterfacePtr_HPP)
-#define EXPERIMENTAL_CInterfacePtr_HPP 1
+#if ! defined(CCOM_CINTERFACEPTR_HPP)
+#define CCOM_CINTERFACEPTR_HPP 1
 
-#include <com/Types.hpp>
+#include <CCom/Types.hpp>
 
 #include <algorithm> // needed for swap
 
-namespace HIT
+namespace CCom
 {
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   //
@@ -153,7 +153,7 @@ namespace HIT
     //    details. You can still enable them by providing the definition below.
     //
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-#if defined (HIT_INTERFACEPTR_ENABLE_CONVERSION_CTOR)
+#if defined (CCom_INTERFACEPTR_ENABLE_CONVERSION_CTOR)
   public:
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     //
@@ -346,9 +346,10 @@ namespace HIT
       return (m_pSelf != nullptr);
     }
   };
-}
 
-#include <com/Cast.hpp>
+} // namespace CCom
 
-#endif // EXPERIMENTAL_CInterfacePtr_HPP
+#include <CCom/Cast.hpp>
+
+#endif // CCOM_CINTERFACEPTR_HPP
 

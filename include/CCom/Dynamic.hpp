@@ -1,12 +1,12 @@
-#if !defined(EXPERIMENTAL_DYNAMIC_HPP)
-#define EXPERIMENTAL_DYNAMIC_HPP 1
+#if ! defined(CCOM_DYNAMIC_HPP)
+#define CCOM_DYNAMIC_HPP 1
 
-#include <com/Types.hpp>
-#include <com/Utils.hpp>
+#include <CCom/Types.hpp>
+#include <CCom/Utils.hpp>
 
-#include <com/CInterfacePtr.hpp>
+#include <CCom/CInterfacePtr.hpp>
 
-namespace HIT
+namespace CCom
 {
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   //
@@ -48,18 +48,18 @@ namespace HIT
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   //
-  //  HIT_DL_ENTRY_POINT - macro definition for defining default entry points
+  //  CCOM_DL_ENTRY_POINT - macro definition for defining default entry points
   //    for shared objects / plugins using COM-like objects.
   //
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-  #define HIT_DL_ENTRY_POINT(FuncName, Instance, args...) \
+  #define CCOM_DL_ENTRY_POINT(FuncName, Instance, args...) \
   extern "C" \
-  HIT::RESULT \
+  CCom::RESULT \
   FuncName \
-  (HIT::RefIID iid, void **ppvInterface) \
+  (CCom::RefIID iid, void **ppvInterface) \
   try \
   { \
-    HIT::CInterfacePtr <HIT::IUnknown> p; \
+    CCom::CInterfacePtr <CCom::IUnknown> p; \
     p.attach (new Instance (args)); \
     const auto res = p->queryInterface (iid, ppvInterface); \
     \
@@ -68,9 +68,10 @@ namespace HIT
   catch (...) \
   { \
     *ppvInterface = nullptr; \
-    return HIT::E_FAIL; \
+    return CCom::E_FAIL; \
   }
-}
 
-#endif // EXPERIMENTAL_DYNAMIC_HPP
+} // namespace CCom
+
+#endif // CCOM_DYNAMIC_HPP
 
