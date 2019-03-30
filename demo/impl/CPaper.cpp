@@ -4,6 +4,18 @@
 
 namespace CCom
 {
+  CPaper::CPaper
+  ()
+  {
+    std::cout << "CPaper::CPaper()" << std::endl;
+  }
+
+  CPaper::~CPaper
+  ()
+  {
+    std::cout << "CPaper::~CPaper()" << std::endl;
+  }
+
   void
   CPaper::draw()
   noexcept
