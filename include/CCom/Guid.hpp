@@ -100,23 +100,16 @@ namespace CCom
 
   #else
 
-    #define CCOM_DEFINE_IID_SYMBOL(I) \
+    #define CCOM_DEFINE_IID_SYMBOL(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
       extern "C" \
       const CCom::GUID IID_##I;
 
-    #define CCOM_DEFINE_IID_TRAIT(I)
-      template <> \
-      struct CCom::IID_Traits <I> \
-      { \
-        static \
-        const \
-        CCom::GUID \
-        iid; \
-      };
+    #define CCOM_DEFINE_IID_TRAIT(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
+      template <> struct CCom::IID_Traits <I>;
 
   #endif
 
-  #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_SYMBOL(__VA_ARGS__); CCOM_DEFINE_IID_TRAIT(__VA_ARGS__);
+  #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_TRAIT(__VA_ARGS__)
 
 } // namespace CCom
 

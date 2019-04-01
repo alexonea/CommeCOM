@@ -16,6 +16,7 @@
 //
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+#define CCOM_INSTANTIATE_IID 1
 #include "impl/CPaper.hpp"
 
 #include <CCom/Dynamic.hpp>
