@@ -11,12 +11,10 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Header-only library providing basic \
 means for working with 'comme' (like) COM objects under all platforms.")
 
 set(CPACK_PACKAGE_VENDOR "Alexandru N. Onea")
-# set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.txt")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 
 include(CPack)
-
-include_directories(include)
 
 add_subdirectory(include)
 add_subdirectory(examples)
