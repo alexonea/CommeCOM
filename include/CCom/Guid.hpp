@@ -33,7 +33,7 @@ namespace CCom
 
   using IID   = GUID;
   using CLSID = GUID;
-  
+
   using RefIID = const GUID &;
 
   inline
@@ -47,7 +47,7 @@ namespace CCom
     for (int i = 0; i < sizeof (lhs); ++i)
       if (pLhsData[i] != pRhsData[i])
         return false;
-    
+
     return true;
   }
 
@@ -79,39 +79,44 @@ namespace CCom
 
   template <class I>
   struct IID_Traits
-  {};
+  {
+    static
+    const
+    GUID
+    iid;
+  };
 
   #if defined (CCOM_INSTANTIATE_IID)
-    #define CCOM_DEFINE_IID(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
+
+    #define CCOM_DEFINE_IID_SYMBOL(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
       extern "C" \
-      const CCom::GUID IID_##I = {a, b, c, {d1, d2, d3, d4, d5, d6, d7, d8}}; \
-      \
+      const CCom::GUID IID_##I = {a, b, c, {d1, d2, d3, d4, d5, d6, d7, d8}};
+
+    #define CCOM_DEFINE_IID_TRAIT(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
       template <> \
-      struct IID_Traits <I> \
-      { \
-        static \
-        const \
-        CCom::GUID \
-        iid; \
-      }; \
-      \
       const \
       CCom::GUID \
       CCom::IID_Traits <I>::iid = {a, b, c, { d1, d2, d3, d4, d5, d6, d7, d8 }};
+
   #else
-   #define CCOM_DEFINE_IID(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
+
+    #define CCOM_DEFINE_IID_SYMBOL(I) \
       extern "C" \
-      const CCom::GUID IID_##I; \
-      \
+      const CCom::GUID IID_##I;
+
+    #define CCOM_DEFINE_IID_TRAIT(I)
       template <> \
-      struct IID_Traits <I> \
+      struct CCom::IID_Traits <I> \
       { \
         static \
         const \
         CCom::GUID \
         iid; \
       };
+
   #endif
+
+  #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_SYMBOL(__VA_ARGS__); CCOM_DEFINE_IID_TRAIT(__VA_ARGS__);
 
 } // namespace CCom
 

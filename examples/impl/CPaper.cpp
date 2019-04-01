@@ -20,7 +20,7 @@
 
 #include <CCom/Dynamic.hpp>
 
-namespace CCom
+namespace CComExamples
 {
   CPaper::CPaper
   ()

@@ -26,9 +26,9 @@
 #include <CCom/CComObjectBase.hpp>
 #include <interface/IDrawable.hpp>
 
-namespace CCom
+namespace CComExamples
 {
-  class CPaper : public CComObjectBase <CPaper, IDrawable>
+  class CPaper : public CCom::CComObjectBase <CPaper, IDrawable>
   {
   public:
     CPaper();

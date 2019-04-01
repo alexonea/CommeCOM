@@ -44,7 +44,7 @@ namespace CCom
     //  Note: In the process, this method should also call addRef in case of
     //    success, to record the fact that a new reference to 'this' has been
     //    given out. Other components such as CInterfacePtr depend on this
-    //    fact. 
+    //    fact.
     //
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     virtual
@@ -101,9 +101,11 @@ namespace CCom
     }
   };
 
-  CCOM_DEFINE_IID (IUnknown, 0x00000000, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
-
 } // namespace CCom
+
+CCOM_DEFINE_IID_SYMBOL (IUnknown, 0x00000000, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
+CCOM_DEFINE_IID_TRAIT  (CCom::IUnknown, 0x00000000, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
+
 
 #endif // CCOM_IUNKNOWN_HPP
 

@@ -21,9 +21,9 @@
 
 #include <CCom/IUnknown.hpp>
 
-namespace CCom
+namespace CComExamples
 {
-  struct IDrawable : public IUnknown
+  struct IDrawable : public CCom::IUnknown
   {
     virtual
     void
@@ -31,9 +31,10 @@ namespace CCom
     ()
     noexcept = 0;
   };
-
-  CCOM_DEFINE_IID (IDrawable, 0xAB00CD00, 0x1234, 0x4568, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
 }
+
+CCOM_DEFINE_IID_SYMBOL (IDrawable, 0xAB00CD00, 0x1234, 0x4568, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
+CCOM_DEFINE_IID_TRAIT  (CComExamples::IDrawable, 0xAB00CD00, 0x1234, 0x4568, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
 
 #endif // CCOM_DEMO_INTERFACE_IDRAWABLE_HPP
 
