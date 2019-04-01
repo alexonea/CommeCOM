@@ -25,8 +25,6 @@
 
 #include <CCom/Types.hpp>
 
-#include <iostream>
-
 namespace CCom
 {
 #if __cpp_variadic_templates
