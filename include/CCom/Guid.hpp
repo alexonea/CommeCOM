@@ -98,6 +98,8 @@ namespace CCom
       CCom::GUID \
       CCom::IID_Traits <I>::iid = {a, b, c, { d1, d2, d3, d4, d5, d6, d7, d8 }};
 
+    #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_TRAIT(__VA_ARGS__)
+
   #else
 
     #define CCOM_DEFINE_IID_SYMBOL(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
@@ -115,9 +117,10 @@ namespace CCom
       CCom::GUID \
       CCom::IID_Traits <I>::iid;
 
+    #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_TRAIT(__VA_ARGS__)
+
   #endif
 
-  #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_TRAIT(__VA_ARGS__)
 
 } // namespace CCom
 

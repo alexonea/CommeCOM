@@ -26,8 +26,14 @@ set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
 include(CPack)
 
 option(WITH_EXAMPLES "Build the examples - requires libboost" OFF)
+option(WITH_TESTS    "Enable and build tests"                 ON )
 
 add_subdirectory(include)
+
+if (WITH_TESTS)
+  enable_testing ()
+  add_subdirectory(tests)
+endif ()
 
 if(WITH_EXAMPLES)
   find_package(Boost REQUIRED COMPONENTS filesystem)
