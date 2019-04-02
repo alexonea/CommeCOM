@@ -76,7 +76,7 @@ const GUID IID_Traits <IDrawable>::iid = { 0x12345678, 0xabcd, 0xef01, { 0x23, 0
 ```
 
 ##### 3. Defining an ```IID``` using the library facility (recommended)
-Finally, the safest way to define a new ```IID``` is to use the library provided macro ```CCOM_DEFINE_IID``` which defines the ```IID``` in both ways from above (i.e. provides the classical extern symbol for raw querying as well as the trait for the library internal workings).
+Finally, the safest way to define a new ```IID``` is to use the library provided macro ```CCOM_DEFINE_IID``` which specializes ```IID_Traits```. This way is equivalent to the second method above.
 
 An example is below.
 
