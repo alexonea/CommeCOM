@@ -105,7 +105,15 @@ namespace CCom
       const CCom::GUID IID_##I;
 
     #define CCOM_DEFINE_IID_TRAIT(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
-      template <> struct CCom::IID_Traits <I>;
+      extern \
+      template \
+      struct CCom::IID_Traits <I>; \
+      \
+      extern \
+      template \
+      const \
+      CCom::GUID \
+      CCom::IID_Traits <I>::iid;
 
   #endif
 
