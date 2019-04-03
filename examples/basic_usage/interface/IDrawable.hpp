@@ -23,6 +23,7 @@
 
 namespace CComExamples
 {
+
   struct IDrawable : public CCom::IUnknown
   {
     virtual
@@ -31,10 +32,9 @@ namespace CComExamples
     ()
     noexcept = 0;
   };
+
+  CCOM_DEFINE_IID (IDrawable, "AB00CD00123445680300000000000046");
 }
-
-CCOM_DEFINE_IID (CComExamples::IDrawable, 0xAB00CD00, 0x1234, 0x4568, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
-
 
 #endif // CCOM_DEMO_INTERFACE_IDRAWABLE_HPP
 

@@ -1,3 +1,2 @@
 add_library(paper SHARED CPaper.cpp)
-target_link_libraries(paper PRIVATE drawable CCom)
-
+target_link_libraries(paper PRIVATE CCom)

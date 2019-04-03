@@ -20,10 +20,12 @@
 #define CCOM_GUID_HPP 1
 
 #include <cstdint>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
 
 namespace CCom
 {
-  struct GUID
+  struct _GUID
   {
     uint32_t data1;
     uint16_t data2;
@@ -31,11 +33,13 @@ namespace CCom
     uint8_t  data4[8];
   };
 
+  using GUID  = boost::uuids::uuid;
   using IID   = GUID;
   using CLSID = GUID;
 
   using RefIID = const GUID &;
 
+  /*
   inline
   bool
   operator==
@@ -58,24 +62,7 @@ namespace CCom
   {
     return ! (lhs == rhs);
   }
-
-  inline
-  bool
-  isIUnknown
-  (const GUID& iid)
-  {
-    return (iid.data1    == 0x00000000 &&
-            iid.data2    == 0x0000 &&
-            iid.data3    == 0x0000 &&
-            iid.data4[0] == 0xc0 &&
-            iid.data4[1] == 0x00 &&
-            iid.data4[2] == 0x00 &&
-            iid.data4[3] == 0x00 &&
-            iid.data4[4] == 0x00 &&
-            iid.data4[5] == 0x00 &&
-            iid.data4[6] == 0x00 &&
-            iid.data4[7] == 0x46);
-  }
+  */
 
   template <class I>
   struct IID_Traits
@@ -86,36 +73,25 @@ namespace CCom
     iid;
   };
 
+  #define CCOM_DEFINE_IID_TRAIT(I, data) \
+    template <> \
+    const \
+    CCom::GUID \
+    CCom::IID_Traits <I>::iid = boost::uuids::string_generator () (data);
+
   #if defined (CCOM_INSTANTIATE_IID)
 
-    #define CCOM_DEFINE_IID_SYMBOL(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
+    #define CCOM_DEFINE_IID_SYMBOL(I, data) \
       extern "C" \
-      const CCom::GUID IID_##I = {a, b, c, {d1, d2, d3, d4, d5, d6, d7, d8}};
-
-    #define CCOM_DEFINE_IID_TRAIT(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
-      template <> \
-      const \
-      CCom::GUID \
-      CCom::IID_Traits <I>::iid = {a, b, c, { d1, d2, d3, d4, d5, d6, d7, d8 }};
+      const CCom::GUID IID_##I = boost::uuids::string_generator () (data);
 
     #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_TRAIT(__VA_ARGS__)
 
   #else
 
-    #define CCOM_DEFINE_IID_SYMBOL(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
+    #define CCOM_DEFINE_IID_SYMBOL(I, data) \
       extern "C" \
       const CCom::GUID IID_##I;
-
-    #define CCOM_DEFINE_IID_TRAIT(I, a, b, c, d1, d2, d3, d4, d5, d6, d7, d8) \
-      extern \
-      template \
-      struct CCom::IID_Traits <I>; \
-      \
-      extern \
-      template \
-      const \
-      CCom::GUID \
-      CCom::IID_Traits <I>::iid;
 
     #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_TRAIT(__VA_ARGS__)
 
