@@ -32,4 +32,3 @@ namespace CCom
 } // namespace CCom
 
 #endif // CCOM_UTILS_HPP
-

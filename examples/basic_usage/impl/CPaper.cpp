@@ -16,24 +16,31 @@
 //
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-#if ! defined(CCOM_DEMO_INTERFACE_IDRAWABLE_HPP)
-#define CCOM_DEMO_INTERFACE_IDRAWABLE_HPP 1
+#include "impl/CPaper.hpp"
 
-#include <CCom/IUnknown.hpp>
+#include <CCom/Dynamic.hpp>
 
-namespace CCom
+namespace CComExamples
 {
-  struct IDrawable : public IUnknown
+  CPaper::CPaper
+  ()
   {
-    virtual
-    void
-    draw
-    ()
-    noexcept = 0;
-  };
+    std::cout << "CPaper::CPaper()" << std::endl;
+  }
 
-  CCOM_DEFINE_IID (IDrawable, 0xAB00CD00, 0x1234, 0x4568, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
+  CPaper::~CPaper
+  ()
+  {
+    std::cout << "CPaper::~CPaper()" << std::endl;
+  }
+
+  void
+  CPaper::draw()
+  noexcept
+  {
+    std::cout << "CPaper::draw()" << std::endl;
+  }
+
+  CCOM_DL_ENTRY_POINT(getInstance, CPaper);
 }
-
-#endif // CCOM_DEMO_INTERFACE_IDRAWABLE_HPP
 

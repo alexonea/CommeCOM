@@ -16,31 +16,25 @@
 //
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-#if ! defined(CCOM_DEMO_IMPL_CPAPER_HPP)
-#define CCOM_DEMO_IMPL_CPAPER_HPP 1
+#if ! defined(CCOM_DEMO_INTERFACE_IDRAWABLE_HPP)
+#define CCOM_DEMO_INTERFACE_IDRAWABLE_HPP 1
 
-#define CCOM_INSTANTIATE_IID 1
+#include <CCom/IUnknown.hpp>
 
-#include <iostream>
-
-#include <CCom/CComObjectBase.hpp>
-#include <interface/IDrawable.hpp>
-
-namespace CCom
+namespace CComExamples
 {
-  class CPaper : public CComObjectBase <CPaper, IDrawable>
+  struct IDrawable : public CCom::IUnknown
   {
-  public:
-    CPaper();
-    ~CPaper();
-
-  public:
     virtual
     void
-    draw()
-    noexcept override;
+    draw
+    ()
+    noexcept = 0;
   };
 }
 
-#endif // CCOM_DEMO_IMPL_CPAPER_HPP
+CCOM_DEFINE_IID (CComExamples::IDrawable, 0xAB00CD00, 0x1234, 0x4568, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
+
+
+#endif // CCOM_DEMO_INTERFACE_IDRAWABLE_HPP
 

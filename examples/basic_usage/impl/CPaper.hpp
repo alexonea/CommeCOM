@@ -16,31 +16,29 @@
 //
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-#include "impl/CPaper.hpp"
+#if ! defined(CCOM_DEMO_IMPL_CPAPER_HPP)
+#define CCOM_DEMO_IMPL_CPAPER_HPP 1
 
-#include <CCom/Dynamic.hpp>
+#include <iostream>
 
-namespace CCom
+#include <CCom/CComObjectBase.hpp>
+#include <interface/IDrawable.hpp>
+
+namespace CComExamples
 {
-  CPaper::CPaper
-  ()
+  class CPaper : public CCom::CComObjectBase <CPaper, IDrawable>
   {
-    std::cout << "CPaper::CPaper()" << std::endl;
-  }
+  public:
+    CPaper();
+    ~CPaper();
 
-  CPaper::~CPaper
-  ()
-  {
-    std::cout << "CPaper::~CPaper()" << std::endl;
-  }
-
-  void
-  CPaper::draw()
-  noexcept
-  {
-    std::cout << "CPaper::draw()" << std::endl;
-  }
-
-  CCOM_DL_ENTRY_POINT(getInstance, CPaper);
+  public:
+    virtual
+    void
+    draw()
+    noexcept override;
+  };
 }
+
+#endif // CCOM_DEMO_IMPL_CPAPER_HPP
 

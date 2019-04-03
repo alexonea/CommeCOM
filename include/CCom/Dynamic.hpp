@@ -49,7 +49,7 @@ namespace CCom
     if (! pfnGetInterface)
       // [2019-03-30]: E_POINTER might be a better choice
       return E_FAIL;
-    
+
     IDesired *pDesired;
     const auto res = pfnGetInterface
     (
@@ -92,4 +92,3 @@ namespace CCom
 } // namespace CCom
 
 #endif // CCOM_DYNAMIC_HPP
-

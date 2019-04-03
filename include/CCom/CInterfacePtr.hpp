@@ -370,4 +370,3 @@ namespace CCom
 #include <CCom/Cast.hpp>
 
 #endif // CCOM_CINTERFACEPTR_HPP
-

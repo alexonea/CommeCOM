@@ -178,4 +178,3 @@ namespace CCom
 }
 
 #endif // CCOM_CCOMOBJECTBASE_HPP
-
