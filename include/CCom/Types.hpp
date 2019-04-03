@@ -41,4 +41,3 @@ namespace CCom
 #include <CCom/IUnknown.hpp>
 
 #endif // CCOM_TYPES_HPP
-

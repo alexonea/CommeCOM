@@ -121,8 +121,6 @@ namespace CCom
 
   #endif
 
-
 } // namespace CCom
 
 #endif // CCOM_GUID_HPP
-

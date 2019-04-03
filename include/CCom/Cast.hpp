@@ -53,4 +53,3 @@ namespace CCom
 } // namespace CCom
 
 #endif // CCOM_CAST_HPP
-

@@ -92,4 +92,3 @@ namespace CCom
 } // namespace CCom
 
 #endif // CCOM_DYNAMIC_HPP
-
