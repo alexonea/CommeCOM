@@ -49,7 +49,7 @@ EliminateHyphens
 //  return c >= '0' && c <= '9' ? c - '0' : c >= 'A' && c <= 'F' ? c - 'A' + 10 : c >= 'a' && c <= 'f' ? c - 'a' + 10 : -1;
 //}
 
-/*template <char C> unsigned f ();
+template <char C> unsigned f ();
 
 template <>       unsigned f <'0'> () { return  0; }
 template <>       unsigned f <'1'> () { return  1; }
@@ -75,13 +75,74 @@ template <>       unsigned f <'c'> () { return 12; }
 template <>       unsigned f <'d'> () { return 13; }
 template <>       unsigned f <'e'> () { return 14; }
 template <>       unsigned f <'f'> () { return 15; }
-*/
+
+#include <stdexcept>
+#include <string>
+#include <cassert>
 
 
-constexpr unsigned f (char c)
+constexpr uint64_t f (char c)
 {
   return c >= '0' && c <= '9' ? c - '0' : c >= 'A' && c <= 'F' ? c - 'A' + 10 : c >= 'a' && c <= 'f' ? c - 'a' + 10 : -1;
 }
+/*
+template <std::size_t x = 0>
+constexpr
+uint64_t
+fallback
+()
+{
+  static_assert (false, "Incomplete GUID !");
+  return 0;
+}
+*/
+
+constexpr
+uint64_t
+fone(const char *p, bool bHalf = true, std::size_t current = 1)
+{
+  using namespace std::string_literals;
+  return
+    *p == 0 ? (current == 17 ? 0 : throw std::logic_error {"Incomplete GUID"s}) :
+    (current == 17 ? (bHalf ? 0 : fone (p, ! bHalf, 1)) :
+    (*p == '-' ? fone (p + 1, bHalf, current) : fone (p + 1, bHalf, current + 1) | (f (p[0]) << ((16 - current) * 4))));
+}
+
+/*
+constexpr
+const char *
+skip
+(const char *p, int &n)
+{
+  return *p == '-' ? skip (p + 1, ++n) : p;
+}
+
+constexpr
+uint8_t
+parse_hex_u8
+(const char *p, int &n)
+{
+  return f ( skip (p, n) [0]) << 4 | f ( skip (p, 0) [++n]);
+}
+
+*/
+
+constexpr uint64_t test = fone ("11223344556677889900AABBCCDDEEFF", false);
+
+int
+main()
+{
+  std::cout << std::hex << std::uppercase << uint64_t (test) << '\n';
+}
+
+
+
+
+
+
+
+
+
 
 //template <std::size_t N>
 //constexpr
@@ -123,21 +184,21 @@ uint32_t h32 (const char *p)
   const char *const p0 = Skip (p);
   const uint16_t w0 = h8 (p0);
 
-  const char *const p1 = Skip (p0 + 4);..........
-  const uint8_t b1 = h8 (p1);
+  const char *const p1 = Skip (p0 + 4);
+  const uint8_t w1 = h8 (p1);
 
-  return b0 << 8 | b1;
+  return w0 << 16 | w1;
 }
 
 
-
+/*
 int main ()
 {
   //constexpr const char q [] = "AAA";
-  std::cout << std::hex << std::uppercase << unsigned (h16 ("----------AA-----CC")) << "\n";
+  std::cout << std::hex << std::uppercase << unsigned (h32 ("----------AA-----CC")) << "\n";
 }
 
-
+*/
 
 
 /*

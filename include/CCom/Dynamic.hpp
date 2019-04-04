@@ -53,7 +53,7 @@ namespace CCom
     IDesired *pDesired;
     const auto res = pfnGetInterface
     (
-      IID_Traits <IDesired>::iid,
+      IID_Traits <IDesired>::iid (),
       toVoidPtrPtr (&pDesired)
     );
 

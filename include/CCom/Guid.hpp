@@ -67,17 +67,23 @@ namespace CCom
   template <class I>
   struct IID_Traits
   {
+    inline
     static
     const
     GUID
-    iid;
+    iid
+    ();
   };
 
   #define CCOM_DEFINE_IID_TRAIT(I, data) \
     template <> \
+    inline \
     const \
     CCom::GUID \
-    CCom::IID_Traits <I>::iid = boost::uuids::string_generator () (data);
+    CCom::IID_Traits <I>::iid () \
+    { \
+      return boost::uuids::string_generator () (data); \
+    }
 
   #if defined (CCOM_INSTANTIATE_IID)
 

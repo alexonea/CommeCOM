@@ -56,7 +56,7 @@ namespace CCom
     (RefIID iid)
     noexcept
     {
-      if (iid == IID_Traits <Head>::iid)
+      if (iid == IID_Traits <Head>::iid ())
         return static_cast <Head *> (this);
       else
         return CComObjectBase_QI <Tail...>::impl_QueryInterface (iid);

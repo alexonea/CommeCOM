@@ -99,9 +99,6 @@ namespace CCom
       *ppInterface = static_cast <IDesired *> (*ppvInterface);
       return res;
     }
-
-    constexpr
-    static const GUID my_iid = {0x00000000, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46};
   };
 
   CCOM_DEFINE_IID_SYMBOL (IUnknown      , "0000000000000000c000000000000046");
@@ -125,7 +122,7 @@ namespace CCom
             iid.data4[6] == 0x00 &&
             iid.data4[7] == 0x46);
     */
-    return iid == IID_Traits <IUnknown>::iid;
+    return iid == IID_Traits <IUnknown>::iid ();
   }
 }
 
