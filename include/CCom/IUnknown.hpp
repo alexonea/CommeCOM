@@ -101,29 +101,25 @@ namespace CCom
     }
   };
 
-  CCOM_DEFINE_IID_SYMBOL (IUnknown      , "0000000000000000c000000000000046");
-  CCOM_DEFINE_IID_TRAIT  (CCom::IUnknown, "0000000000000000c000000000000046");
-
   inline
   bool
   isIUnknown
   (const GUID& iid)
   {
-    /*
     return (iid.data1    == 0x00000000 &&
-            iid.data2    == 0x0000 &&
-            iid.data3    == 0x0000 &&
-            iid.data4[0] == 0xc0 &&
-            iid.data4[1] == 0x00 &&
-            iid.data4[2] == 0x00 &&
-            iid.data4[3] == 0x00 &&
-            iid.data4[4] == 0x00 &&
-            iid.data4[5] == 0x00 &&
-            iid.data4[6] == 0x00 &&
+            iid.data2    == 0x0000     &&
+            iid.data3    == 0x0000     &&
+            iid.data4[0] == 0xc0       &&
+            iid.data4[1] == 0x00       &&
+            iid.data4[2] == 0x00       &&
+            iid.data4[3] == 0x00       &&
+            iid.data4[4] == 0x00       &&
+            iid.data4[5] == 0x00       &&
+            iid.data4[6] == 0x00       &&
             iid.data4[7] == 0x46);
-    */
-    return iid == IID_Traits <IUnknown>::iid ();
   }
 }
+
+CCOM_DEFINE_IID_NS (CCom, IUnknown, "0000000000000000c000000000000046");
 
 #endif // CCOM_IUNKNOWN_HPP

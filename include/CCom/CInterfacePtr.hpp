@@ -263,7 +263,7 @@ namespace CCom
       IOther *pOther;
       const auto res = m_pSelf->queryInterface
       (
-        IID_Traits <IOther>::iid,
+        IID_Traits <IOther>::iid (),
         toVoidPtrPtr (&pOther)
       );
 

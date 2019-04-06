@@ -27,6 +27,7 @@
 
 namespace CCom
 {
+
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   //
   //  Macros for compile-time error reporting during the GUID parsing
@@ -45,6 +46,7 @@ namespace CCom
   //
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   template <typename T>
+  inline
   constexpr
   std::size_t
   __nGroups
@@ -62,6 +64,7 @@ namespace CCom
   //    compile-time error (hopefully).
   //
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+  inline
   constexpr
   uint64_t
   __parseU8 (uint8_t c)
@@ -89,6 +92,7 @@ namespace CCom
   //
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   template <typename T>
+  inline
   constexpr
   T
   __compute
@@ -108,6 +112,7 @@ namespace CCom
   //
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   template <typename T>
+  inline
   constexpr
   T
   __parseNext
@@ -136,8 +141,9 @@ namespace CCom
   //    to any of the GUID data groups.
   //
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+  inline
   constexpr
-  _GUID
+  GUID
   fromStr
   (const char * const p)
   {

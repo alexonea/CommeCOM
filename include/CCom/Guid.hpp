@@ -20,12 +20,10 @@
 #define CCOM_GUID_HPP 1
 
 #include <cstdint>
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
 
 namespace CCom
 {
-  struct _GUID
+  struct GUID
   {
     uint32_t data1;
     uint16_t data2;
@@ -33,13 +31,11 @@ namespace CCom
     uint8_t  data4[8];
   };
 
-  using GUID  = boost::uuids::uuid;
   using IID   = GUID;
   using CLSID = GUID;
 
   using RefIID = const GUID &;
 
-  /*
   inline
   bool
   operator==
@@ -62,7 +58,6 @@ namespace CCom
   {
     return ! (lhs == rhs);
   }
-  */
 
   template <class I>
   struct IID_Traits
@@ -75,34 +70,75 @@ namespace CCom
     ();
   };
 
+  constexpr
+  GUID
+  fromStr (const char * const p);
+
   #define CCOM_DEFINE_IID_TRAIT(I, data) \
     template <> \
-    inline \
-    const \
-    CCom::GUID \
-    CCom::IID_Traits <I>::iid () \
+    struct CCom::IID_Traits <I> \
     { \
-      return boost::uuids::string_generator () (data); \
+      inline \
+      static \
+      constexpr \
+      const \
+      CCom::GUID \
+      iid \
+      () \
+      { \
+        return IID_##I; \
+      } \
     }
 
+  #define CCOM_DEFINE_IID_TRAIT_NS(NS, I, data) \
+    template <> \
+    struct CCom::IID_Traits <NS::I> \
+    { \
+      inline \
+      static \
+      constexpr \
+      const \
+      CCom::GUID \
+      iid \
+      () \
+      { \
+        return IID_##I; \
+      } \
+    }
+
+  // [2019-04-06] AOnea: is CCOM_INSTANTIATE_IID necessary? We need to consider broader cases.
   #if defined (CCOM_INSTANTIATE_IID)
 
     #define CCOM_DEFINE_IID_SYMBOL(I, data) \
       extern "C" \
-      const CCom::GUID IID_##I = boost::uuids::string_generator () (data);
+      constexpr const CCom::GUID IID_##I = CCom::fromStr (data)
 
-    #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_TRAIT(__VA_ARGS__)
+    #define CCOM_DEFINE_IID(...) \
+      CCOM_DEFINE_IID_SYMBOL(__VA_ARGS__); \
+      CCOM_DEFINE_IID_TRAIT(__VA_ARGS__) \
+
+    #define CCOM_DEFINE_IID_NS(NS, ...) \
+      CCOM_DEFINE_IID_SYMBOL(__VA_ARGS__); \
+      CCOM_DEFINE_IID_TRAIT_NS(NS, __VA_ARGS__) \
 
   #else
 
     #define CCOM_DEFINE_IID_SYMBOL(I, data) \
       extern "C" \
-      const CCom::GUID IID_##I;
+      constexpr const CCom::GUID IID_##I = CCom::fromStr (data)
 
-    #define CCOM_DEFINE_IID(...) CCOM_DEFINE_IID_TRAIT(__VA_ARGS__)
+    #define CCOM_DEFINE_IID(...) \
+      CCOM_DEFINE_IID_SYMBOL(__VA_ARGS__); \
+      CCOM_DEFINE_IID_TRAIT(__VA_ARGS__)
+
+    #define CCOM_DEFINE_IID_NS(NS, ...) \
+      CCOM_DEFINE_IID_SYMBOL(__VA_ARGS__); \
+      CCOM_DEFINE_IID_TRAIT_NS(NS, __VA_ARGS__) \
 
   #endif
 
 } // namespace CCom
+
+#include <CCom/Parse.hpp>
 
 #endif // CCOM_GUID_HPP

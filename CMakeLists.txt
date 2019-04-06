@@ -36,7 +36,7 @@ if (WITH_TESTS)
 endif ()
 
 if(WITH_EXAMPLES)
-  find_package(Boost REQUIRED COMPONENTS filesystem exception)
+  find_package(Boost REQUIRED COMPONENTS filesystem)
   add_subdirectory(examples)
 endif ()
 
