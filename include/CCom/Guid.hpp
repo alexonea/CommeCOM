@@ -74,9 +74,20 @@ namespace CCom
   GUID
   fromStr (const char * const p);
 
+  #if defined (__GNUC__) && (__GNUC__ < 7)
+    #define CCOM_ENCLOSING_NS_BEGIN namespace CCom {
+    #define CCOM_ENCLOSING_NS_END }
+    #define CCOM_IID_TRAITS struct IID_Traits
+  #else
+    #define CCOM_ENCLOSING_NS_BEGIN
+    #define CCOM_ENCLOSING_NS_END
+    #define CCOM_IID_TRAITS struct CCom::IID_Traits
+  #endif
+
   #define CCOM_DEFINE_IID_TRAIT(I, data) \
+    CCOM_ENCLOSING_NS_BEGIN \
     template <> \
-    struct CCom::IID_Traits <I> \
+    CCOM_IID_TRAITS <I> \
     { \
       inline \
       static \
@@ -88,11 +99,13 @@ namespace CCom
       { \
         return IID_##I; \
       } \
-    }
+    }; \
+    CCOM_ENCLOSING_NS_END
 
   #define CCOM_DEFINE_IID_TRAIT_NS(NS, I, data) \
+    CCOM_ENCLOSING_NS_BEGIN \
     template <> \
-    struct CCom::IID_Traits <NS::I> \
+    CCOM_IID_TRAITS <NS::I> \
     { \
       inline \
       static \
@@ -104,7 +117,8 @@ namespace CCom
       { \
         return IID_##I; \
       } \
-    }
+    }; \
+    CCOM_ENCLOSING_NS_END
 
   // [2019-04-06] AOnea: is CCOM_INSTANTIATE_IID necessary? We need to consider broader cases.
   #if defined (CCOM_INSTANTIATE_IID)
