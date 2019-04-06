@@ -118,7 +118,8 @@ namespace CCom
             iid.data4[6] == 0x00       &&
             iid.data4[7] == 0x46);
   }
-}
+
+} // CCom
 
 CCOM_DEFINE_IID_NS (CCom, IUnknown, "0000000000000000c000000000000046");
 
