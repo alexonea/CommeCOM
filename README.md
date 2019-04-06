@@ -1,14 +1,18 @@
-# CommeCOM
+# CommeCOM [![Build Status](https://travis-ci.com/alexonea/CommeCOM.svg?branch=master)](https://travis-ci.com/alexonea/CommeCOM)
 Header-only library providing basic means for working with "comme" (like) COM objects for all platforms.
 
 ## Status
-The library is currently experimental. There are still bugs lurking and waiting to strike when you expect it less.
+The library is currently experimental. Contributions and suggestions are welcome.
 
 ## Usage
 The primary usa-case of the library is for querying interfaces and acccessing functionality from dynamically loaded plug-ins (DLLs or shared objects) while maintaining the binary compatibilty accross compilers and compiler versions.
 
-### Prerequisites
-The only prerequisite is a C++ compiler with support for ```c++11```.
+### Prerequisites and dependencies
+The following are usage prerequisites:
+* c++ compiler with support for ```c++11```
+
+In addition, building the examples included in this repository, the following are also required:
+* libboost > 1.61 (required for Boost.DLL)
 
 ### Defining an interface
 To define an interface, there is really nothing special exceping the fact that the interface must inherit from ```IUnknown``` (otherwise cannot be used for implementing COM objects). In the example below we define an interface ```IDrawable``` which defines a single method ```draw ()```.
@@ -60,38 +64,10 @@ extern "C" const GUID IID_IDrawable = { 0x12345678, 0xabcd, 0xef01, { 0x23, 0x45
 The ```extern "C"``` part is critical to prevent mangling of the name of our interface ```IID``` identifier. It is recommended to use the same naming scheme for all inteface IDs (```IID_IMyInterface```) for consistenty.
 
 ##### 2. Defining an ```IID``` using ```IID_Traits```
-This method is required when using the library provided facilities for querying interfaces. The library provides an interface trait called ```IID_Traits``` which maps interface types to ```GUIDs```.
-
-
-To define an ```IID``` for an already existing interface, just provide a specialization of the trait for the interface with a ```static``` member with the name ```iid```, as follows.
-
-```
-template <>
-struct IID_Traits <IDrawable>
-{
-  static const GUID iid;
-}
-
-const GUID IID_Traits <IDrawable>::iid = { 0x12345678, 0xabcd, 0xef01, { 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01 } };
-```
+TODO
 
 ##### 3. Defining an ```IID``` using the library facility (recommended)
-Finally, the safest way to define a new ```IID``` is to use the library provided macro ```CCOM_DEFINE_IID``` which specializes ```IID_Traits```. This way is equivalent to the second method above.
-
-An example is below.
-
-```
-CCOM_DEFINE_IID (IDrawable, 0xAB00CD00, 0x1234, 0x4568, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
-```
-
-#### Beware of symbol redefinition errors
-You are most likely to define ```IIDs``` in header files which can be potentially included in more than one source file which in turn can be linked to the same executable. Having the same symbol defined in multiple object files linked to the same executable leads to linker errors. To avoid this, the defaul behaviour of ```CCOM_DEFINE_IID``` is to just declare the respective ```IID``` but not define it. To actually define it you must provide the following definition before the actual macro.
-
-```
-#define CCOM_INSTANTIATE_IID
-```
-
-This way you can control where and when are the ```IIDs``` defined to avoid linker errors.
+TODO
 
 ### Providing an implementation
 After defining an abstract interface, we must provide at least one implementation. Classically, that means defining a class which implements (inherits) the interface and overrides all the virtual methods. An example is provided below.
