@@ -124,8 +124,7 @@ namespace CCom
   #if defined (CCOM_INSTANTIATE_IID)
 
     #define CCOM_DEFINE_IID_SYMBOL(I, data) \
-      extern "C" \
-      constexpr const CCom::GUID IID_##I = CCom::fromStr (data)
+      static constexpr const CCom::GUID IID_##I = CCom::fromStr (data)
 
     #define CCOM_DEFINE_IID(...) \
       CCOM_DEFINE_IID_SYMBOL(__VA_ARGS__); \
@@ -138,8 +137,7 @@ namespace CCom
   #else
 
     #define CCOM_DEFINE_IID_SYMBOL(I, data) \
-      extern "C" \
-      constexpr const CCom::GUID IID_##I = CCom::fromStr (data)
+      static constexpr const CCom::GUID IID_##I = CCom::fromStr (data)
 
     #define CCOM_DEFINE_IID(...) \
       CCOM_DEFINE_IID_SYMBOL(__VA_ARGS__); \
